@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\datakomoditas;
+use App\Models\token;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
+
 
 class datakomoditasController extends Controller
 {
@@ -99,14 +101,27 @@ class datakomoditasController extends Controller
 
     public function getDataFromAPI()
 {
-    try {
-        // Menggunakan HTTP Client untuk melakukan GET request ke URL API
-        $response = Http::get('https://hakana.web.id/api/getkomoditas');
 
-        // Periksa apakah request berhasil
-        if ($response->successful()) {
-            // Mendapatkan data JSON dari respons
-            $data = $response->json();
+    $token = token::where('expires_at', '>', now())->first();
+
+    if (!$token) {
+        return response()->json(['error' => 'Token tidak tersedia'], 401);
+    }
+
+    $accessToken = $token->access_token;
+        $apiUrl = "https://api-splp.layanan.go.id/panelharga/2.0/api/panel-harga-pangan/daftar-komoditas/3";
+
+        try {
+            // Make an authenticated GET request with the access token
+            $response = Http::withHeaders([
+                'Authorization' => 'Bearer ' . $accessToken,
+                'Accept' => 'application/json',
+            ])->get($apiUrl);
+    
+            // Check the response from the API
+            if ($response->successful()) {
+                $data = $response->json();
+     
             //dd($data);
             foreach ($data['data'] as $item) {
                 datakomoditas::updateOrInsert(

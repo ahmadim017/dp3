@@ -1,12 +1,15 @@
 @extends('layouts.sbadmin')
 
 @section('header')
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+<link href="{{asset('sbadmin/vendor/datatables/dataTables.bootstrap4.min.css')}}" rel="stylesheet">
 @endsection
 
-{{-- Untuk view index space  ini hampir sama dengan view index centrepoint dimana kita memuat cdn datatable
-css dan js yang membedakannya ada pada ajax server side di bagian push('javascript') yaitu pada route 
---}}
+@section('footer')
+<script src="{{asset('sbadmin/vendor/datatables/jquery.dataTables.min.js')}}"></script>
+<script src="{{asset('sbadmin/vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
+<script src="{{asset('sbadmin/js/demo/datatables-demo.js')}}"></script>
+@endsection
+
 @section('content')
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <a href="{{route('map.index')}}" class="my-1 btn btn-primary btn-sm shadow-sm"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bar-chart" viewBox="0 0 16 16">
@@ -31,58 +34,29 @@ css dan js yang membedakannya ada pada ajax server side di bagian push('javascri
                             </div>
                         @endif
                         <div class="table-responsive">
-                        <table class="table" id="dataSpaces">
+                            <table class="table table-striped" id="dataTable">
                             <thead>
                                 <tr>
                                     <th>No.</th>
                                     <th>Nama Kegiatan</th>
                                     <th>Jumlah Peserta</th>
-                                    <th>Aksi</th>
                                 </tr>
-                            <tbody></tbody>
+                            <tbody>
+                                @foreach ($space as $item)
+                                <tr>
+                                    <td>{{$loop->iteration}}</td>
+                                    <td><a href="{{route('space.show',[$item->id])}}">{{$item->name}}</a></td>
+                                    <td>{{$item->jumlah}}</td>
+                                </tr>
+                                    
+                                @endforeach
+
+                            </tbody>
                             </thead>
                         </table>
-                        <form action="" method="POST" id="deleteForm">
-                            @csrf
-                            @method("DELETE")
-                            <input type="submit" value="Hapus" style="display: none">
-                        </form>
+                        
                     </div>
                     </div>
                 </div>
                 </div>
-@endsection
-
-@section('footer')
-    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
-    <script>
-        $(function() {
-            $('#dataSpaces').DataTable({
-                processing: true,
-                serverSide: true,
-                responsive: true,
-                lengthChange: false,
-                autoWidth: false,
-                
-                // Route untuk menampilkan data space
-                ajax: '{{ route('data-space') }}',
-                columns: [{
-                        data: 'DT_RowIndex',
-                        orderable: false,
-                        searchable: false
-                    },
-                    {
-                        data: 'name'
-                    },
-                    {
-                        data: 'jumlah'
-                    },
-                    {
-                        data: 'action'
-                    }
-                ]
-            })
-        })
-    </script>
 @endsection

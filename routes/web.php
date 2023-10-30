@@ -68,7 +68,7 @@ Auth::routes([
 route::resource('usulan', usulanController::class)->except(['index', 'show'])
 ->middleware('operator');
 
-route::get('/dashboard/pangan',[App\Http\Controllers\neracapanganController::class,'dash'])->name('neracapangan.dashboard');
+    route::get('/dashboard/pangan',[App\Http\Controllers\neracapanganController::class,'dash'])->name('neracapangan.dashboard');
 
     route::get('/dashboard/neracabahanmakan',[App\Http\Controllers\nbmController::class,'dash'])->name('nbm.dashboard');
 
@@ -88,9 +88,14 @@ route::get('/dashboard/pangan',[App\Http\Controllers\neracapanganController::cla
 
     route::get('/dashboard/panelharga/{id_komoditas}',[App\Http\Controllers\panelhargaController::class,'detail'])->name('panelharga.detail');
 
-Route::group(['middleware' => ['auth']], function () {
+
+    Route::group(['middleware' => ['auth']], function () {
+
+    Route::get('/requestToken', [App\Http\Controllers\ApiController::class, 'requestToken'])->name('requestToken');
 
     Route::get('/getData', [App\Http\Controllers\ApiController::class, 'getData'])->name('dataharga.get');
+
+    //Route::get('/getkomoditas', [App\Http\Controllers\ApiController::class, 'getkomoditas'])->name('datakomoditas.get');
 
     Route::get('/getDataFromAPI', [App\Http\Controllers\datakomoditasController::class, 'getDataFromAPI'])->name('datakomoditas.get');
 

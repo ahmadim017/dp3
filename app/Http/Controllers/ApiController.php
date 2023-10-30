@@ -133,7 +133,7 @@ class ApiController extends Controller
     $accessToken = $token->access_token;
 
         // API endpoint URL
-        $apiUrl = 'https://api-splp.layanan.go.id/panelharga/2.0/panelharga/daftar-komoditas/3';
+        $apiUrl = 'https://api-splp.layanan.go.id/panelharga/2.0/api/panel-harga-pangan/daftar-komoditas/3';
 
         // Make an authenticated GET request with the access token
         $response = Http::withHeaders([

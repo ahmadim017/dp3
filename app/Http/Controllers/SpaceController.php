@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\CentrePoint;
 use App\Models\Space;
+use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
@@ -18,8 +19,9 @@ class SpaceController extends Controller
      */
     public function index()
     {
-        // Menampilkan data dari tabel space
-        return view('space.index');
+        $tahun = Carbon::now()->year;
+        $space = Space::whereYear('created_at', $tahun)->get();
+        return view('space.index',['space' => $space]);
     }
 
     /**
@@ -100,7 +102,8 @@ class SpaceController extends Controller
      */
     public function show($id)
     {
-        //
+        $space = Space::findOrfail($id);
+        return view('space.show',['space' => $space]);
     }
 
     /**
@@ -136,10 +139,8 @@ class SpaceController extends Controller
             'jumlah' => 'required',
             'location' => 'required'
         ]);
-
-        // Jika data yang akan diganti ada pada tabel space
-        // cek terlebih dahulu apakah akan mengganti gambar atau tidak
-        // jika gambar diganti hapus terlebuh dahulu gambar lama
+        $fileName = null;
+        
         $space = Space::findOrFail($space->id);
         if ($request->hasFile('image')) {
             if (File::exists("uploads/imgCover/" . $space->image)) {
@@ -152,16 +153,15 @@ class SpaceController extends Controller
         }
 
         if ($request->hasFile('file')) {
-            if ($space->file && file_exists(storage_path('app/public/filependukung/' . $space->file))) {
-                Storage::delete('public/filependukung/' . $space->file);
+            if ($space->file && file_exists(storage_path('app/public/filependukung/' .$space->file))) {
+                Storage::delete('public/filependukung/' .$space->file);
             }
         
             $file = $request->file('file');
             $fileName = time() . '_' . $file->getClientOriginalName();
             $file->storeAs('public/filependukung', $fileName);
-            $request->merge(['file' => $fileName]);
+            $space->file = $fileName;
         }
-
         // Lakukan Proses update data ke tabel space
         $space->update([
             'name' => $request->name,

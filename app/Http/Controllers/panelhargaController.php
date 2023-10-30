@@ -196,10 +196,10 @@ class panelhargaController extends Controller
     public function getDataFromAPI(Request $request)
 {
     $currentDate = Carbon::now()->toDateString();
-    //$last = panelharga::latest('tanggal')->first();
+    $last = panelharga::latest('tanggal')->first();
     //$tgllast = $last->tanggal;
     //$tgl= Carbon::parse($tgllast)->format('Y-m-d');
-    $startDate = '2023-10-01';
+    $startDate = $last;
     $endDate = $currentDate;    
 
     // Get the access token from the session or a secure place
@@ -211,7 +211,7 @@ class panelhargaController extends Controller
 
     $accessToken = $token->access_token;
     // API endpoint URL
-    $apiUrl = "https://api-splp.layanan.go.id/panelharga/2.0/panelharga/data-harian/{$startDate}/{$endDate}/3/64.71";
+    $apiUrl = "https://api-splp.layanan.go.id/panelharga/2.0/api/panel-harga-pangan/data-harian/2023-10-01/2023-10-30/3/64.71";
 
     try {
         // Make an authenticated GET request with the access token
