@@ -20,10 +20,5 @@ class panelharga extends Model
         return $this->belongsTo(datakomoditas::class, 'id_komoditas');
     }
 
-    public function gettanggalAttribute()
-    {
     
-    return
-    Carbon::parse($this->attributes['tanggal'])->locale('id')->isoFormat('D MMMM Y');
-    }
 }

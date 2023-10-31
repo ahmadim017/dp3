@@ -67,7 +67,7 @@ class ApiController extends Controller
     $accessToken = $token->access_token;
 	//dd($accessToken);
         // API endpoint URL
-        $apiUrl = "https://api-splp.layanan.go.id/panelharga/2.0/panelharga/data-harian/{$startDate}/{$currentDate}/3/64.09";
+        $apiUrl = "https://api-splp.layanan.go.id/panelharga/2.0//api/panel-harga-pangan/data-harian/{$startDate}/{$currentDate}/3/64.71";
 
         // Make an authenticated GET request with the access token
         $response = Http::withHeaders([
