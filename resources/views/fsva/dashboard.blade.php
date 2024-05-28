@@ -84,53 +84,49 @@
 
 <script>
    
-    var mbAttr = '',
-       mbUrl =
-        'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiZXJpcHJhdGFtYSIsImEiOiJjbGZubmdib3UwbnRxM3Bya3M1NGE4OHRsIn0.oxYqbBbaBwx0dHLguu5gOA';
-    var satellite = L.tileLayer(mbUrl, {
-            id: 'mapbox/satellite-v9',
-            tileSize: 512,
-            zoomOffset: -1,
-            attribution: mbAttr
-        }),
-        dark = L.tileLayer(mbUrl, {
-            id: 'mapbox/dark-v10',
-            tileSize: 512,
-            zoomOffset: -1,
-            attribution: mbAttr
-        }),
-        streets = L.tileLayer(mbUrl, {
-            id: 'mapbox/streets-v11',
-            tileSize: 512,
-            zoomOffset: -1,
-            attribution: mbAttr
-        });
-    var map = L.map('map', {
-                   
-        center: [{{ $centrePoint->location }}],
-        zoom: 12,
-        layers: [streets]
-        
-    });
-    var baseLayers = {
-        "Grayscale": dark,
-        "Satellite": satellite,
-        "Streets": streets
-    };
-    var overlays = {
-        "Streets": streets,
-        "Grayscale": dark,
-        "Satellite": satellite,
-    };
-    L.control.layers(baseLayers, overlays).addTo(map);
-    map.scrollWheelZoom.disable();
+   var latitude = -1.1709923847739967;
+var longitude = 116.88663482666017;
+
+var map = L.map('map').setView([latitude, longitude], 11);
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: ''
+}).addTo(map);
+
+var baseLayers = {
+    "Satellite": L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiZXJpcHJhdGFtYSIsImEiOiJjbGZubmdib3UwbnRxM3Bya3M1NGE4OHRsIn0.oxYqbBbaBwx0dHLguu5gOA', {
+        id: 'mapbox/satellite-v9',
+        tileSize: 512,
+        zoomOffset: -1,
+        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a>'
+    }),
+    "Dark": L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiZXJpcHJhdGFtYSIsImEiOiJjbGZubmdib3UwbnRxM3Bya3M1NGE4OHRsIn0.oxYqbBbaBwx0dHLguu5gOA', {
+        id: 'mapbox/dark-v10',
+        tileSize: 512,
+        zoomOffset: -1,
+        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a>'
+    }),
+    "Streets": L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiZXJpcHJhdGFtYSIsImEiOiJjbGZubmdib3UwbnRxM3Bya3M1NGE4OHRsIn0.oxYqbBbaBwx0dHLguu5gOA', {
+        id: 'mapbox/streets-v11',
+        tileSize: 512,
+        zoomOffset: -1,
+        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a>'
+    })
+};
+
+var overlays = {};
+
+L.control.layers(baseLayers, overlays).addTo(map);
+map.scrollWheelZoom.disable();
+var tooltip = L.DomUtil.create('div', 'tooltip');
+  map.getContainer().appendChild(tooltip);
 
     var data = [
         @foreach ($fsva as $key => $value) 
             {"kelurahan": "{!! $value->kelurahan !!}", "indexprioritas": {!! $value->indexprioritas !!},"penyediaanpangan": {!! $value->penyediaanpangan !!},"kesejahteraanrendah": {!! $value->kesejahteraanrendah !!},"aksespenghubung": {!! $value->aksespenghubung !!},"aksesairbersih": {!! $value->aksesairbersih !!},"jmltenagakesehatan": {!! $value->jmltenagakesehatan !!}  },
         @endforeach            
     ];
-    var overlays = {};
+
 
 
 
