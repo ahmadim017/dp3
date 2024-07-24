@@ -38,12 +38,13 @@
 
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Dashboard FSVA</h1>
+      
     <a href="{{route('fsvaapi.index')}}" class="my-1 btn btn-primary btn-sm"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-table" viewBox="0 0 16 16">
   <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm15 2h-4v3h4V4zm0 4h-4v3h4V8zm0 4h-4v3h3a1 1 0 0 0 1-1v-2zm-5 3v-3H6v3h4zm-5 0v-3H1v2a1 1 0 0 0 1 1h3zm-4-4h4V8H1v3zm0-4h4V4H1v3zm5-3v3h4V4H6zm4 4H6v3h4V8z"/>
 </svg>
  FSVA</a>
 </div>
-
+<p>Sumber : Badang Pangan Nasional</p>
  <div class="d-sm-flex align-items-center justify-content-between mb-4">
   <form action="{{route('fsvaapi.dashboard')}}">
 <div class="d-flex justify-content-between">
@@ -68,7 +69,7 @@
     <div class="col-md-12">
         <div class="card shadow mb-4">
           <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-secondary">Peta FSVA Kota Balikpapan</h6>
+            <h6 class="m-0 font-weight-bold text-secondary">Peta FSVA Kota Balikpapan </h6>
           </div>
             <div class="card-body">
                 <div id="map" style="height: 700px; width: 100%;"></div>
