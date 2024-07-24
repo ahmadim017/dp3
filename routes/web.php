@@ -80,6 +80,10 @@ route::resource('usulan', usulanController::class)->except(['index', 'show'])
 
     route::get('/dashboard/fsva',[App\Http\Controllers\fsvaController::class,'dash'])->name('fsva.dashboard');
 
+    route::get('/dashboard/fsvaapi',[App\Http\Controllers\fsvaapiController::class,'dash'])->name('fsvaapi.dashboard');
+
+    route::get('/fsvaapi',[App\Http\Controllers\fsvaapiController::class,'index'])->name('fsvaapi.index');
+
     route::get('/dashboard/prognosa',[App\Http\Controllers\prognosaController::class,'dashboard'])->name('prognosa.dashboard');
 
     route::get('/dashboard/usulan',[App\Http\Controllers\usulanController::class,'dashboard'])->name('usulan.dashboard');
@@ -89,9 +93,12 @@ route::resource('usulan', usulanController::class)->except(['index', 'show'])
     route::get('/dashboard/panelharga/{id_komoditas}',[App\Http\Controllers\panelhargaController::class,'detail'])->name('panelharga.detail');
 
 
+
     Route::group(['middleware' => ['auth']], function () {
 
     Route::get('/requestToken', [App\Http\Controllers\ApiController::class, 'requestToken'])->name('requestToken');
+
+    //Route::get('/getDataFsva', [App\Http\Controllers\ApiController::class, 'getDataFromAPI'])->name('datafsva');
 
     Route::get('/getData', [App\Http\Controllers\ApiController::class, 'getData'])->name('dataharga.get');
 
@@ -100,6 +107,8 @@ route::resource('usulan', usulanController::class)->except(['index', 'show'])
     Route::get('/getDataFromAPI', [App\Http\Controllers\datakomoditasController::class, 'getDataFromAPI'])->name('datakomoditas.get');
 
     Route::get('/getDatapanelharga', [App\Http\Controllers\panelhargaController::class, 'getDataFromAPI'])->name('datapanelharga.get');
+
+    Route::get('/getDataFsva', [App\Http\Controllers\fsvaapiController::class, 'getDataFromAPI'])->name('datafsva');
 
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 

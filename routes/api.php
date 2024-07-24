@@ -17,5 +17,6 @@ use App\Http\Controllers\ApiController;
 
 
 Route::get('/requestToken', [ApiController::class, 'requestToken'])->name('requestToken');
+Route::get('/getDataFsva', [ApiController::class, 'getDataFromAPI'])->name('datafsva');
 Route::get('/getData', [ApiController::class, 'getData']);
 Route::get('/getkomoditas', [ApiController::class, 'getkomoditas']);

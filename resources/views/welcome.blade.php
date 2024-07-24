@@ -106,7 +106,7 @@
               <div class="max-w-sm bg-stone-100 border border-gray-200 rounded-lg shadow-lg dark:bg-gray-800 dark:border-gray-700">
 
                 <a href="#">
-                    <img class="rounded-t-lg" src="{{asset('storage/'. $b->file)}}" alt="" />
+                    <img class="rounded-t-lg" src="{{asset('storage/slide/image/'. $b->file)}}" alt="" />
                 </a>
                 <div class="flex justify-end mr-5 md:justify-end -mt-10">
                     <button class="w-16 h-16 object-cover bg-cyan-700 rounded-full border-2 border-white text-white text-md">{{$b->created_at}}</button>

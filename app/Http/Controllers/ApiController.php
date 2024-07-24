@@ -51,6 +51,7 @@ class ApiController extends Controller
         }
     }
 
+    
     public function getData(Request $request)
     {
 	$currentDate = Carbon::now()->toDateString();
